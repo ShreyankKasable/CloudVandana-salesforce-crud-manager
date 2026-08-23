@@ -9,6 +9,7 @@ const requiredEnvVariables = [
     "SALESFORCE_CLIENT_SECRET",
     "SALESFORCE_REDIRECT_URI",
     "SALESFORCE_LOGIN_URL",
+    "SALESFORCE_API_VERSION",
 ];
 
 for (const variable of requiredEnvVariables) {
@@ -27,4 +28,5 @@ module.exports = {
     salesforceClientSecret: process.env.SALESFORCE_CLIENT_SECRET,
     salesforceRedirectUri: process.env.SALESFORCE_REDIRECT_URI,
     salesforceLoginUrl: process.env.SALESFORCE_LOGIN_URL,
+    salesforceApiVersion: process.env.SALESFORCE_API_VERSION,
 };

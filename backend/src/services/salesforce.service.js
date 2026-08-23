@@ -1,0 +1,121 @@
+const axios = require("axios");
+const config = require("../config/env");
+const AppError = require("../utils/AppError");
+
+const {
+    SALESFORCE_OBJECTS,
+    PAGE_SIZE,
+} = require("../config/salesforceObjects");
+
+const getRecords = async ({
+    objectName,
+    accessToken,
+    instanceUrl,
+    page,
+}) => {
+
+    const objectConfig = SALESFORCE_OBJECTS[objectName];
+    const offset = (page - 1) * PAGE_SIZE;
+
+    if (offset > 2000) {
+        throw new AppError(
+            "Salesforce API does not support offset greater than 2000. Please use a different approach for pagination.",
+            400,
+            "SALESFORCE_OFFSET_LIMIT_EXCEEDED"
+        );
+    }
+
+    const queryFields = [
+        "Id",
+        ...objectConfig.fields,
+        "CreatedDate",
+    ];
+
+    const soql = `
+        SELECT ${queryFields.join(", ")}
+        FROM ${objectName}
+        ORDER BY CreatedDate DESC, Id DESC
+        LIMIT ${PAGE_SIZE + 1}
+        OFFSET ${offset}
+    `.replace(/\s+/g, " ").trim();
+
+    try {
+        const response = await axios.get(
+            `${instanceUrl}/services/data/${config.salesforceApiVersion}/query`,
+            {
+                params: { q: soql },
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        const fetchedRecords = response.data.records || [];
+
+        const hasNextPage = fetchedRecords.length > PAGE_SIZE;
+
+        const records = fetchedRecords
+            .slice(0, PAGE_SIZE)
+            .map(({ attributes, CreatedDate, ...record }) => record);
+
+        return {
+            fields: objectConfig.fields,
+            records,
+            pagination: {
+                page,
+                pageSize: PAGE_SIZE,
+                hasMore: hasNextPage,
+                nextPage: hasNextPage ? page + 1 : null,
+            },
+        };
+    } catch (error) {
+
+        if (error instanceof AppError) {
+            throw error;
+        }
+
+        const status =
+            error.response?.status;
+
+        const salesforceError =
+            error.response?.data?.[0]?.errorCode;
+
+        if (
+            status === 401 ||
+            salesforceError === "INVALID_SESSION_ID"
+        ) {
+            throw new AppError(
+                "Salesforce session has expired",
+                401,
+                "SALESFORCE_SESSION_EXPIRED"
+            );
+        }
+
+        if (status === 403) {
+            throw new AppError(
+                "You do not have permission to access this Salesforce data",
+                403,
+                "SALESFORCE_ACCESS_DENIED"
+            );
+        }
+
+        if (status === 400) {
+            throw new AppError(
+                "Salesforce rejected the record query",
+                400,
+                "SALESFORCE_QUERY_ERROR"
+            );
+        }
+
+        throw new AppError(
+            "Unable to retrieve records from Salesforce",
+            502,
+            "SALESFORCE_API_ERROR"
+        );
+    }
+
+};
+
+module.exports = {
+    getRecords
+};
