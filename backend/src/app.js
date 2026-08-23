@@ -4,6 +4,8 @@ const cors = require("cors");
 const config = require("./config/env");
 const sessionMiddleware = require("./config/session");
 const authRoutes = require("./routes/auth.routes");
+const AppError = require("./utils/AppError");
+const errorHandler = require("./middleware/error.middleware");
 
 const app = express();
 
@@ -22,5 +24,15 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+
+app.use((req, res, next) => {
+    next(new AppError(
+        `Route not found: ${req.method} ${req.originalUrl}`,
+        404,
+        "ROUTE_NOT_FOUND"
+    ));
+});
+
+app.use(errorHandler);
 
 module.exports = app;

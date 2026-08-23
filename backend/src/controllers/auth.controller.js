@@ -5,6 +5,7 @@ const {
     generateState,
 } = require("../utils/oauth");
 const { exchangeAuthorizationCode } = require("../services/salesforceAuth.service");
+const AppError = require("../utils/AppError");
 
 const startSalesforceAuth = (req, res) => {
     const codeVerifier = generateCodeVerifier();
@@ -32,72 +33,64 @@ const startSalesforceAuth = (req, res) => {
 };
 
 const salesforceCallback = async (req, res) => {
-    try {
-        const {
-            code,
-            state,
-            error,
-            error_description,
-        } = req.query;
+    const {
+        code,
+        state,
+        error,
+        error_description,
+    } = req.query;
 
-        if (error) {
-            return res.status(400).json({
-                success: false,
-                message: error_description || "Salesforce authorization failed",
-            });
-        }
-
-        if (!code) {
-            return res.status(400).json({
-                success: false,
-                message: "Authorization code is missing",
-            });
-        }
-
-        const oauthSession = req.session.salesforceOAuth;
-
-        if (!oauthSession) {
-            return res.status(400).json({
-                success: false,
-                message: "OAuth session not found",
-            });
-        }
-
-        const { codeVerifier, state: savedState } = oauthSession;
-
-        if (state !== savedState) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid OAuth state",
-            });
-        }
-
-        const tokens = await exchangeAuthorizationCode(code, codeVerifier);
-
-        req.session.salesforce = {
-            accessToken: tokens.accessToken,
-            refreshToken: tokens.refreshToken,
-            instanceUrl: tokens.instanceUrl,
-        };
-
-        delete req.session.salesforceOAuth;
-
-        return res.json({
-            success: true,
-            message: "Salesforce authentication successful",
-            instanceUrl: tokens.instanceUrl,
-        });
-    } catch (error) {
-        console.error(
-            "Salesforce authentication error:",
-            error.response?.data || error.message
+    if (error) {
+        throw new AppError(
+            error_description || "Salesforce authorization failed",
+            400,
+            "SALESFORCE_AUTHORIZATION_FAILED"
         );
-
-        return res.status(500).json({
-            success: false,
-            message: "Salesforce authentication failed",
-        });
     }
+
+    if (!code) {
+        throw new AppError(
+            "Authorization code is missing",
+            400,
+            "AUTHORIZATION_CODE_MISSING"
+        );
+    }
+
+    const oauthSession = req.session.salesforceOAuth;
+
+    if (!oauthSession) {
+        throw new AppError(
+            "OAuth session not found",
+            400,
+            "OAUTH_SESSION_NOT_FOUND"
+        );
+    }
+
+    const { codeVerifier, state: savedState } = oauthSession;
+
+    if (state !== savedState) {
+        throw new AppError(
+            "Invalid OAuth state",
+            400,
+            "INVALID_OAUTH_STATE"
+        );
+    }
+
+    const tokens = await exchangeAuthorizationCode(code, codeVerifier);
+
+    req.session.salesforce = {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+        instanceUrl: tokens.instanceUrl,
+    };
+
+    delete req.session.salesforceOAuth;
+
+    return res.json({
+        success: true,
+        message: "Salesforce authentication successful",
+        instanceUrl: tokens.instanceUrl,
+    });
 };
 
 module.exports = {
