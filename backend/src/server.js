@@ -4,10 +4,11 @@ const dotenv = require("dotenv");
 const session = require("express-session");
 const crypto = require("crypto");
 const axios = require("axios");
-
 const { RedisStore } = require("connect-redis");
-const redisClient = require("./config/redis");
+
 dotenv.config();
+
+const redisClient = require("./config/redis");
 
 const app = express();
 
