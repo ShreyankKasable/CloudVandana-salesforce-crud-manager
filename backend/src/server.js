@@ -114,7 +114,7 @@ app.get("/auth/salesforce/callback", async (req, res) => {
 
         const { access_token, refresh_token, instance_url } = response.data;
 
-        req.session.salesforceOAuth = {
+        req.session.salesforce = {
             accessToken: access_token,
             refreshToken: refresh_token,
             instanceUrl: instance_url,
