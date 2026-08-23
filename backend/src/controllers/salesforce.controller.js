@@ -2,7 +2,7 @@ const AppError = require("../utils/AppError");
 
 const { getRecords } = require("../services/salesforce.service");
 
-const getSalesForceRecords = async (req, res) => {
+const getSalesforceRecords = async (req, res) => {
 
     const { objectName } = req.params;
     const page = Number(req.query.page || 1);
@@ -36,5 +36,5 @@ const getSalesForceRecords = async (req, res) => {
 };
 
 module.exports = {
-    getSalesforceRecords: getSalesForceRecords,
+    getSalesforceRecords,
 };

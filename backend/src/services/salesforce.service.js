@@ -19,9 +19,9 @@ const getRecords = async ({
 
     if (offset > 2000) {
         throw new AppError(
-            "Salesforce API does not support offset greater than 2000. Please use a different approach for pagination.",
+            "Requested page exceeds the supported offset pagination range",
             400,
-            "SALESFORCE_OFFSET_LIMIT_EXCEEDED"
+            "PAGINATION_LIMIT_EXCEEDED"
         );
     }
 
