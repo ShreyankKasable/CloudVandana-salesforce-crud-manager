@@ -1,12 +1,12 @@
 const AppError = require("../utils/AppError");
 
-const validateSalesForceRecordId = (req, res, next) => {
+const validateSalesforceRecordId = (req, res, next) => {
 
     const { recordId } = req.params;
 
-    const isValidate = /^[a-zA-Z0-9]{15}([a-zA-Z0-9]{3})?$/.test(recordId);
+    const isValid = /^[a-zA-Z0-9]{15}([a-zA-Z0-9]{3})?$/.test(recordId);
 
-    if (!isValidate){
+    if (!isValid){
 
         return next(
             new AppError(
@@ -19,4 +19,4 @@ const validateSalesForceRecordId = (req, res, next) => {
     next();
 }
 
-module.exports = validateSalesForceRecordId;
+module.exports = validateSalesforceRecordId;
