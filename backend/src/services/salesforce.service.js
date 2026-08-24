@@ -177,9 +177,38 @@ const updateRecord = async ({
     }
 };
 
+const deleteRecord = async ({
+    objectName,
+    recordId,
+    accessToken,
+    instanceUrl,
+}) => {
+    try {
+        await axios.delete(
+            `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        return {
+            recordId,
+        };
+
+    } catch (error) {
+        throw mapSalesforceError(
+            error,
+            "delete"
+        );
+    }
+};
+
 module.exports = {
     getRecords,
     getRecordById,
     createRecord,
-    updateRecord
+    updateRecord,
+    deleteRecord
 };

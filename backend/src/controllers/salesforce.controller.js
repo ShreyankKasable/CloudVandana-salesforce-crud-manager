@@ -1,6 +1,6 @@
 const AppError = require("../utils/AppError");
 
-const { getRecords, getRecordById, createRecord, updateRecord } = require("../services/salesforce.service");
+const { getRecords, getRecordById, createRecord, updateRecord, deleteRecord } = require("../services/salesforce.service");
 
 const getSalesforceRecords = async (req, res) => {
 
@@ -115,9 +115,38 @@ const updateSalesforceRecord = async (req, res) => {
     });
 };
 
+const deleteSalesforceRecord = async (req, res) => {
+    const {
+        objectName,
+        recordId,
+    } = req.params;
+
+    const {
+        accessToken,
+        instanceUrl,
+    } = req.session.salesforce;
+
+    await deleteRecord({
+        objectName,
+        recordId,
+        accessToken,
+        instanceUrl,
+    });
+
+    return res.status(200).json({
+        success: true,
+        message: `${objectName} record deleted successfully`,
+        data: {
+            objectName,
+            recordId,
+        },
+    });
+};
+
 module.exports = {
     getSalesforceRecords,
     getSalesforceRecordById,
     createSalesforceRecord,
-    updateSalesforceRecord
+    updateSalesforceRecord,
+    deleteSalesforceRecord
 };

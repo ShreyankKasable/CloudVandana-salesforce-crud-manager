@@ -4,7 +4,7 @@ const validateSalesforceObject = require("../middleware/validateSalesforceObject
 const validateSalesforceRecordId = require("../middleware/validateSalesforceRecordId.middleware");
 const validateSalesforceCreatePayload = require("../middleware/validateSalesforceCreatePayload.middleware");
 const validateSalesforceUpdatePayload = require("../middleware/validateSalesforceUpdatePayload.middleware");
-const { getSalesforceRecords, getSalesforceRecordById, createSalesforceRecord, updateSalesforceRecord } = require("../controllers/salesforce.controller");
+const { getSalesforceRecords, getSalesforceRecordById, createSalesforceRecord, updateSalesforceRecord, deleteSalesforceRecord } = require("../controllers/salesforce.controller");
 
 
 const router = express.Router();
@@ -27,6 +27,13 @@ router.patch(
     validateSalesforceRecordId,
     validateSalesforceUpdatePayload,
     updateSalesforceRecord
+);
+
+router.delete(
+    "/:objectName/:recordId",
+    validateSalesforceObject,
+    validateSalesforceRecordId,
+    deleteSalesforceRecord
 );
 
 module.exports = router;

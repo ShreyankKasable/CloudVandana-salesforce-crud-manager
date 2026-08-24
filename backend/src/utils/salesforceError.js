@@ -22,6 +22,8 @@ const mapSalesforceError = (error, operation) => {
             ? "You do not have permission to create this Salesforce record"
             : operation === "update"
             ? "You do not have permission to update this Salesforce record"
+            : operation === "delete"
+            ? "You do not have permission to delete this Salesforce record"
             : operation === "get"
                 ? "You do not have permission to access this Salesforce record"
                 : "You do not have permission to access this Salesforce data";
@@ -33,7 +35,10 @@ const mapSalesforceError = (error, operation) => {
         );
     }
 
-    if ( ["get", "update"].includes(operation) && status === 404 ) {
+    if (
+        ["get", "update", "delete"].includes(operation) &&
+        status === 404
+    ) {
         return new AppError(
             "Salesforce record not found",
             404,
@@ -60,6 +65,10 @@ const mapSalesforceError = (error, operation) => {
                 ? salesforceError?.message ||
                 "Salesforce rejected the record update"
 
+            : operation === "delete"
+                ? salesforceError?.message ||
+                "Salesforce rejected the record deletion"
+
             : operation === "get"
                 ? "Salesforce rejected the record request"
 
@@ -72,6 +81,9 @@ const mapSalesforceError = (error, operation) => {
 
             : operation === "update"
                 ? "SALESFORCE_UPDATE_VALIDATION_ERROR"
+
+            : operation === "delete"
+                ? "SALESFORCE_DELETE_VALIDATION_ERROR"
 
             : operation === "get"
                 ? "SALESFORCE_RECORD_REQUEST_ERROR"
@@ -92,6 +104,9 @@ const mapSalesforceError = (error, operation) => {
 
         : operation === "update"
             ? "Unable to update Salesforce record"
+
+        : operation === "delete"
+            ? "Unable to delete Salesforce record"
 
         : operation === "get"
             ? "Unable to retrieve Salesforce record"
