@@ -116,6 +116,90 @@ const getRecords = async ({
 
 };
 
+const getRecordById = async ({
+    objectName,
+    recordId,
+    accessToken,
+    instanceUrl
+}) => {
+    const objectConfig = SALESFORCE_OBJECTS[objectName];
+
+    const fields = [
+        "Id",
+        ...objectConfig.fields
+    ];
+
+    try {
+
+        const response = await axios.get(
+            `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}` 
+                },
+                params: {
+                    fields: fields.join(',')
+                },
+            }
+        )
+
+        const { attributes, ...record} = response.data;
+        
+        return { 
+            fields: objectConfig.fields,
+            record
+        };
+
+    } catch (error) {
+        const status = error.response?.status;
+
+        const salesforceError =
+            error.response?.data?.[0]?.errorCode;
+
+        if (
+            status === 401 ||
+            salesforceError === "INVALID_SESSION_ID"
+        ) {
+            throw new AppError(
+                "Salesforce session has expired",
+                401,
+                "SALESFORCE_SESSION_EXPIRED"
+            );
+        }
+
+        if (status === 404) {
+            throw new AppError(
+                "Salesforce record not found",
+                404,
+                "SALESFORCE_RECORD_NOT_FOUND"
+            );
+        }
+
+        if (status === 403) {
+            throw new AppError(
+                "You do not have permission to access this Salesforce record",
+                403,
+                "SALESFORCE_ACCESS_DENIED"
+            );
+        }
+
+        if (status === 400) {
+            throw new AppError(
+                "Salesforce rejected the record request",
+                400,
+                "SALESFORCE_RECORD_REQUEST_ERROR"
+            );
+        }
+
+        throw new AppError(
+            "Unable to retrieve Salesforce record",
+            502,
+            "SALESFORCE_API_ERROR"
+        );
+    }
+}
+
 module.exports = {
-    getRecords
+    getRecords,
+    getRecordById
 };
