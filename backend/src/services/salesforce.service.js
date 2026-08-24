@@ -199,7 +199,89 @@ const getRecordById = async ({
     }
 }
 
+const createRecord = async ({
+    objectName,
+    data,
+    accessToken,
+    instanceUrl
+}) => {
+
+    try {
+
+        const response = await axios.post(
+            `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                     "Content-Type": "application/json",
+                }
+            }
+        )
+
+        return {
+            id: response.data.id,
+            success: response.data.success,
+        };
+    } catch (error) {
+
+        const status =
+            error.response?.status;
+
+        const salesforceError =
+            error.response?.data?.[0];
+
+        if (
+            status === 401 ||
+            salesforceError?.errorCode ===
+                "INVALID_SESSION_ID"
+        ) {
+            throw new AppError(
+                "Salesforce session has expired",
+                401,
+                "SALESFORCE_SESSION_EXPIRED"
+            );
+        }
+
+        if (status === 403) {
+            throw new AppError(
+                "You do not have permission to create this Salesforce record",
+                403,
+                "SALESFORCE_ACCESS_DENIED"
+            );
+        }
+
+        if (
+            salesforceError?.errorCode ===
+            "REQUIRED_FIELD_MISSING"
+        ) {
+            throw new AppError(
+                salesforceError.message ||
+                    "Required Salesforce field is missing",
+                400,
+                "SALESFORCE_REQUIRED_FIELD_MISSING"
+            );
+        }
+
+        if (status === 400) {
+            throw new AppError(
+                salesforceError?.message ||
+                    "Salesforce rejected the record data",
+                400,
+                "SALESFORCE_VALIDATION_ERROR"
+            );
+        }
+
+        throw new AppError(
+            "Unable to create Salesforce record",
+            502,
+            "SALESFORCE_API_ERROR"
+        );
+    }
+}
+
 module.exports = {
     getRecords,
-    getRecordById
+    getRecordById,
+    createRecord
 };

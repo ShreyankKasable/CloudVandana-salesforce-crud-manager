@@ -8,7 +8,17 @@ const SALESFORCE_OBJECTS = {
             "BillingCity",
             "Type",
         ],
+
+        createFields: [
+            "Name",
+            "Industry",
+            "Phone",
+            "Website",
+            "BillingCity",
+            "Type",
+        ],
     },
+
     Opportunity: {
         fields: [
             "Name",
@@ -18,7 +28,17 @@ const SALESFORCE_OBJECTS = {
             "Type",
             "LeadSource",
         ],
+
+        createFields: [
+            "Name",
+            "StageName",
+            "Amount",
+            "CloseDate",
+            "Type",
+            "LeadSource",
+        ],
     },
+
     Lead: {
         fields: [
             "FirstName",
@@ -29,7 +49,16 @@ const SALESFORCE_OBJECTS = {
             "Status",
         ],
 
+        createFields: [
+            "FirstName",
+            "LastName",
+            "Company",
+            "Email",
+            "Phone",
+            "Status",
+        ],
     },
+
     Contact: {
         fields: [
             "FirstName",
@@ -39,7 +68,17 @@ const SALESFORCE_OBJECTS = {
             "Title",
             "Department",
         ],
+
+        createFields: [
+            "FirstName",
+            "LastName",
+            "Email",
+            "Phone",
+            "Title",
+            "Department",
+        ],
     },
+
     Case: {
         fields: [
             "CaseNumber",
@@ -49,7 +88,15 @@ const SALESFORCE_OBJECTS = {
             "Origin",
             "Type",
         ],
-    }
+
+        createFields: [
+            "Subject",
+            "Status",
+            "Priority",
+            "Origin",
+            "Type",
+        ],
+    },
 };
 
 const PAGE_SIZE = 20;

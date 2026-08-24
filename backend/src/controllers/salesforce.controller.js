@@ -1,6 +1,6 @@
 const AppError = require("../utils/AppError");
 
-const { getRecords, getRecordById } = require("../services/salesforce.service");
+const { getRecords, getRecordById, createRecord } = require("../services/salesforce.service");
 
 const getSalesforceRecords = async (req, res) => {
 
@@ -58,7 +58,32 @@ const getSalesforceRecordById = async (req, res) => {
     });
 }
 
+const createSalesforceRecord = async (req, res) => {
+
+    const { objectName } = req.params;
+    const data = req.body;
+    const { accessToken, instanceUrl } = req.session.salesforce;
+
+    const result = await createRecord({
+        objectName,
+        data,
+        accessToken,
+        instanceUrl,
+    });
+
+    return res.status(201).json({
+        success: true,
+        message:
+            `${objectName} record created successfully`,
+        data: {
+            objectName,
+            recordId: result.id,
+        },
+    });
+}
+
 module.exports = {
     getSalesforceRecords,
-    getSalesforceRecordById
+    getSalesforceRecordById,
+    createSalesforceRecord
 };
