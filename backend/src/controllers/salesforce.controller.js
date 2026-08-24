@@ -15,13 +15,10 @@ const getSalesforceRecords = async (req, res) => {
         );
     }
 
-    const { accessToken, instanceUrl } = req.session.salesforce;
-
     const result = await getRecords({
         objectName,
-        accessToken,
-        instanceUrl,
-        page
+        page,
+        salesforceSession: req.session.salesforce,
     });
 
     return res.status(200).json({
@@ -39,13 +36,10 @@ const getSalesforceRecordById = async (req, res) => {
 
     const { objectName, recordId } = req.params;
 
-    const {accessToken, instanceUrl} = req.session.salesforce;
-
     const result = await getRecordById({
         objectName,
         recordId,
-        accessToken,
-        instanceUrl,
+        salesforceSession: req.session.salesforce,
     });
 
     res.status(200).json({
@@ -62,13 +56,10 @@ const createSalesforceRecord = async (req, res) => {
 
     const { objectName } = req.params;
     const data = req.body;
-    const { accessToken, instanceUrl } = req.session.salesforce;
-
     const result = await createRecord({
         objectName,
         data,
-        accessToken,
-        instanceUrl,
+        salesforceSession: req.session.salesforce,
     });
 
     return res.status(201).json({
@@ -90,17 +81,11 @@ const updateSalesforceRecord = async (req, res) => {
 
     const data = req.body;
 
-    const {
-        accessToken,
-        instanceUrl,
-    } = req.session.salesforce;
-
     await updateRecord({
         objectName,
         recordId,
         data,
-        accessToken,
-        instanceUrl,
+        salesforceSession: req.session.salesforce,
     });
 
     return res.status(200).json({
@@ -121,16 +106,10 @@ const deleteSalesforceRecord = async (req, res) => {
         recordId,
     } = req.params;
 
-    const {
-        accessToken,
-        instanceUrl,
-    } = req.session.salesforce;
-
     await deleteRecord({
         objectName,
         recordId,
-        accessToken,
-        instanceUrl,
+        salesforceSession: req.session.salesforce,
     });
 
     return res.status(200).json({

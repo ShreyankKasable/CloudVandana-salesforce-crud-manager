@@ -2,6 +2,7 @@ const axios = require("axios");
 const config = require("../config/env");
 const AppError = require("../utils/AppError");
 const mapSalesforceError = require("../utils/salesforceError");
+const { executeSalesforceRequest } = require("./salesforceClient.service");
 
 const {
     SALESFORCE_OBJECTS,
@@ -10,9 +11,8 @@ const {
 
 const getRecords = async ({
     objectName,
-    accessToken,
-    instanceUrl,
     page,
+    salesforceSession,
 }) => {
 
     const objectConfig = SALESFORCE_OBJECTS[objectName];
@@ -41,15 +41,18 @@ const getRecords = async ({
     `.replace(/\s+/g, " ").trim();
 
     try {
-        const response = await axios.get(
-            `${instanceUrl}/services/data/${config.salesforceApiVersion}/query`,
-            {
-                params: { q: soql },
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
-        );
+        const response = await executeSalesforceRequest({
+            salesforceSession,
+            request: ({ accessToken, instanceUrl }) => axios.get(
+                `${instanceUrl}/services/data/${config.salesforceApiVersion}/query`,
+                {
+                    params: { q: soql },
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            ),
+        });
 
         const fetchedRecords = response.data.records || [];
 
@@ -78,8 +81,7 @@ const getRecords = async ({
 const getRecordById = async ({
     objectName,
     recordId,
-    accessToken,
-    instanceUrl
+    salesforceSession,
 }) => {
     const objectConfig = SALESFORCE_OBJECTS[objectName];
 
@@ -90,17 +92,20 @@ const getRecordById = async ({
 
     try {
 
-        const response = await axios.get(
-            `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
-            {
-                headers: {
-                    "Authorization": `Bearer ${accessToken}` 
-                },
-                params: {
-                    fields: fields.join(',')
-                },
-            }
-        )
+        const response = await executeSalesforceRequest({
+            salesforceSession,
+            request: ({ accessToken, instanceUrl }) => axios.get(
+                `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    params: {
+                        fields: fields.join(","),
+                    },
+                }
+            ),
+        });
 
         const { attributes, ...record} = response.data;
         
@@ -117,22 +122,24 @@ const getRecordById = async ({
 const createRecord = async ({
     objectName,
     data,
-    accessToken,
-    instanceUrl
+    salesforceSession,
 }) => {
 
     try {
 
-        const response = await axios.post(
-            `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}`,
-            data,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                     "Content-Type": "application/json",
+        const response = await executeSalesforceRequest({
+            salesforceSession,
+            request: ({ accessToken, instanceUrl }) => axios.post(
+                `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}`,
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
                 }
-            }
-        )
+            ),
+        });
 
         return {
             id: response.data.id,
@@ -147,23 +154,22 @@ const updateRecord = async ({
     objectName,
     recordId,
     data,
-    accessToken,
-    instanceUrl,
+    salesforceSession,
 }) => {
     try {
-        await axios.patch(
-            `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
-            data,
-            {
-                headers: {
-                    Authorization:
-                        `Bearer ${accessToken}`,
-
-                    "Content-Type":
-                        "application/json",
-                },
-            }
-        );
+        await executeSalesforceRequest({
+            salesforceSession,
+            request: ({ accessToken, instanceUrl }) => axios.patch(
+                `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            ),
+        });
 
         return {
             recordId,
@@ -180,18 +186,20 @@ const updateRecord = async ({
 const deleteRecord = async ({
     objectName,
     recordId,
-    accessToken,
-    instanceUrl,
+    salesforceSession,
 }) => {
     try {
-        await axios.delete(
-            `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
-        );
+        await executeSalesforceRequest({
+            salesforceSession,
+            request: ({ accessToken, instanceUrl }) => axios.delete(
+                `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            ),
+        });
 
         return {
             recordId,

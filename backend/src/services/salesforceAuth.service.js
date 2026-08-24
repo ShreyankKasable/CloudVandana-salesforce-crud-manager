@@ -47,6 +47,65 @@ const exchangeAuthorizationCode = async (code, codeVerifier) => {
     }
 };
 
+const refreshSalesforceAccessToken = async (refreshToken) => {
+
+    if(!refreshToken){
+        throw new AppError(
+            "Salesforce authentication is required again",
+            401,
+            "SALESFORCE_REAUTH_REQUIRED"
+        );
+    }
+
+    const tokenParams = new URLSearchParams({
+        grant_type: "refresh_token",
+        client_id: config.salesforceClientId,
+        client_secret: config.salesforceClientSecret,
+        refresh_token: refreshToken,
+    });
+
+    try {
+
+        const response = await axios.post(
+            `${config.salesforceLoginUrl}/services/oauth2/token`,
+            tokenParams.toString(),
+            {
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded",
+                },
+            }
+        )
+
+        return {
+            accessToken: response.data.access_token,
+
+            refreshToken: response.data.refresh_token || refreshToken,
+
+            instanceUrl: response.data.instance_url,
+        };
+
+    } catch (error) {
+        const oauthError =
+            error.response?.data?.error;
+
+        if (oauthError === "invalid_grant") {
+            throw new AppError(
+                "Salesforce session has expired. Please login again.",
+                401,
+                "SALESFORCE_REAUTH_REQUIRED"
+            );
+        }
+
+        throw new AppError(
+            "Unable to refresh Salesforce access token",
+            502,
+            "SALESFORCE_TOKEN_REFRESH_FAILED"
+        );
+    }
+}
+
 module.exports = {
     exchangeAuthorizationCode,
+    refreshSalesforceAccessToken
 };
