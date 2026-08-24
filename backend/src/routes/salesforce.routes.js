@@ -3,7 +3,8 @@ const requireSalesforceAuth = require("../middleware/salesforceAuth.middleware")
 const validateSalesforceObject = require("../middleware/validateSalesforceObject.middleware");
 const validateSalesforceRecordId = require("../middleware/validateSalesforceRecordId.middleware");
 const validateSalesforceCreatePayload = require("../middleware/validateSalesforceCreatePayload.middleware");
-const { getSalesforceRecords, getSalesforceRecordById, createSalesforceRecord } = require("../controllers/salesforce.controller");
+const validateSalesforceUpdatePayload = require("../middleware/validateSalesforceUpdatePayload.middleware");
+const { getSalesforceRecords, getSalesforceRecordById, createSalesforceRecord, updateSalesforceRecord } = require("../controllers/salesforce.controller");
 
 
 const router = express.Router();
@@ -18,6 +19,14 @@ router.post(
 	validateSalesforceObject,
 	validateSalesforceCreatePayload,
 	createSalesforceRecord
+);
+
+router.patch(
+    "/:objectName/:recordId",
+    validateSalesforceObject,
+    validateSalesforceRecordId,
+    validateSalesforceUpdatePayload,
+    updateSalesforceRecord
 );
 
 module.exports = router;

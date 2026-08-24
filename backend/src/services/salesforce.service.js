@@ -143,8 +143,43 @@ const createRecord = async ({
     }
 }
 
+const updateRecord = async ({
+    objectName,
+    recordId,
+    data,
+    accessToken,
+    instanceUrl,
+}) => {
+    try {
+        await axios.patch(
+            `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
+            data,
+            {
+                headers: {
+                    Authorization:
+                        `Bearer ${accessToken}`,
+
+                    "Content-Type":
+                        "application/json",
+                },
+            }
+        );
+
+        return {
+            recordId,
+        };
+
+    } catch (error) {
+        throw mapSalesforceError(
+            error,
+            "update"
+        );
+    }
+};
+
 module.exports = {
     getRecords,
     getRecordById,
-    createRecord
+    createRecord,
+    updateRecord
 };

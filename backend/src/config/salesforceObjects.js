@@ -17,6 +17,15 @@ const SALESFORCE_OBJECTS = {
             "BillingCity",
             "Type",
         ],
+
+        updateFields: [
+            "Name",
+            "Industry",
+            "Phone",
+            "Website",
+            "BillingCity",
+            "Type",
+        ],
     },
 
     Opportunity: {
@@ -30,6 +39,15 @@ const SALESFORCE_OBJECTS = {
         ],
 
         createFields: [
+            "Name",
+            "StageName",
+            "Amount",
+            "CloseDate",
+            "Type",
+            "LeadSource",
+        ],
+
+        updateFields: [
             "Name",
             "StageName",
             "Amount",
@@ -57,6 +75,15 @@ const SALESFORCE_OBJECTS = {
             "Phone",
             "Status",
         ],
+
+        updateFields: [
+            "FirstName",
+            "LastName",
+            "Company",
+            "Email",
+            "Phone",
+            "Status",
+        ],
     },
 
     Contact: {
@@ -77,6 +104,15 @@ const SALESFORCE_OBJECTS = {
             "Title",
             "Department",
         ],
+
+        updateFields: [
+            "FirstName",
+            "LastName",
+            "Email",
+            "Phone",
+            "Title",
+            "Department",
+        ],
     },
 
     Case: {
@@ -90,6 +126,14 @@ const SALESFORCE_OBJECTS = {
         ],
 
         createFields: [
+            "Subject",
+            "Status",
+            "Priority",
+            "Origin",
+            "Type",
+        ],
+
+        updateFields: [
             "Subject",
             "Status",
             "Priority",
