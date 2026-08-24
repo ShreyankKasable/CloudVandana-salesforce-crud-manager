@@ -1,6 +1,7 @@
 const axios = require("axios");
 const config = require("../config/env");
 const AppError = require("../utils/AppError");
+const mapSalesforceError = require("../utils/salesforceError");
 
 const {
     SALESFORCE_OBJECTS,
@@ -69,49 +70,7 @@ const getRecords = async ({
             },
         };
     } catch (error) {
-
-        if (error instanceof AppError) {
-            throw error;
-        }
-
-        const status =
-            error.response?.status;
-
-        const salesforceError =
-            error.response?.data?.[0]?.errorCode;
-
-        if (
-            status === 401 ||
-            salesforceError === "INVALID_SESSION_ID"
-        ) {
-            throw new AppError(
-                "Salesforce session has expired",
-                401,
-                "SALESFORCE_SESSION_EXPIRED"
-            );
-        }
-
-        if (status === 403) {
-            throw new AppError(
-                "You do not have permission to access this Salesforce data",
-                403,
-                "SALESFORCE_ACCESS_DENIED"
-            );
-        }
-
-        if (status === 400) {
-            throw new AppError(
-                "Salesforce rejected the record query",
-                400,
-                "SALESFORCE_QUERY_ERROR"
-            );
-        }
-
-        throw new AppError(
-            "Unable to retrieve records from Salesforce",
-            502,
-            "SALESFORCE_API_ERROR"
-        );
+        throw mapSalesforceError(error, "list");
     }
 
 };
@@ -151,51 +110,7 @@ const getRecordById = async ({
         };
 
     } catch (error) {
-        const status = error.response?.status;
-
-        const salesforceError =
-            error.response?.data?.[0]?.errorCode;
-
-        if (
-            status === 401 ||
-            salesforceError === "INVALID_SESSION_ID"
-        ) {
-            throw new AppError(
-                "Salesforce session has expired",
-                401,
-                "SALESFORCE_SESSION_EXPIRED"
-            );
-        }
-
-        if (status === 404) {
-            throw new AppError(
-                "Salesforce record not found",
-                404,
-                "SALESFORCE_RECORD_NOT_FOUND"
-            );
-        }
-
-        if (status === 403) {
-            throw new AppError(
-                "You do not have permission to access this Salesforce record",
-                403,
-                "SALESFORCE_ACCESS_DENIED"
-            );
-        }
-
-        if (status === 400) {
-            throw new AppError(
-                "Salesforce rejected the record request",
-                400,
-                "SALESFORCE_RECORD_REQUEST_ERROR"
-            );
-        }
-
-        throw new AppError(
-            "Unable to retrieve Salesforce record",
-            502,
-            "SALESFORCE_API_ERROR"
-        );
+        throw mapSalesforceError(error, "get");
     }
 }
 
@@ -224,59 +139,7 @@ const createRecord = async ({
             success: response.data.success,
         };
     } catch (error) {
-
-        const status =
-            error.response?.status;
-
-        const salesforceError =
-            error.response?.data?.[0];
-
-        if (
-            status === 401 ||
-            salesforceError?.errorCode ===
-                "INVALID_SESSION_ID"
-        ) {
-            throw new AppError(
-                "Salesforce session has expired",
-                401,
-                "SALESFORCE_SESSION_EXPIRED"
-            );
-        }
-
-        if (status === 403) {
-            throw new AppError(
-                "You do not have permission to create this Salesforce record",
-                403,
-                "SALESFORCE_ACCESS_DENIED"
-            );
-        }
-
-        if (
-            salesforceError?.errorCode ===
-            "REQUIRED_FIELD_MISSING"
-        ) {
-            throw new AppError(
-                salesforceError.message ||
-                    "Required Salesforce field is missing",
-                400,
-                "SALESFORCE_REQUIRED_FIELD_MISSING"
-            );
-        }
-
-        if (status === 400) {
-            throw new AppError(
-                salesforceError?.message ||
-                    "Salesforce rejected the record data",
-                400,
-                "SALESFORCE_VALIDATION_ERROR"
-            );
-        }
-
-        throw new AppError(
-            "Unable to create Salesforce record",
-            502,
-            "SALESFORCE_API_ERROR"
-        );
+        throw mapSalesforceError(error, "create");
     }
 }
 
