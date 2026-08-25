@@ -4,7 +4,7 @@ const validateSalesforceObject = require("../middleware/validateSalesforceObject
 const validateSalesforceRecordId = require("../middleware/validateSalesforceRecordId.middleware");
 const validateSalesforceCreatePayload = require("../middleware/validateSalesforceCreatePayload.middleware");
 const validateSalesforceUpdatePayload = require("../middleware/validateSalesforceUpdatePayload.middleware");
-const { getSalesforceRecords, getSalesforceRecordById, createSalesforceRecord, updateSalesforceRecord, deleteSalesforceRecord } = require("../controllers/salesforce.controller");
+const { getSalesforceRecords, getSalesforceRecordById, createSalesforceRecord, updateSalesforceRecord, deleteSalesforceRecord, getSalesforceObjectFields } = require("../controllers/salesforce.controller");
 
 
 const router = express.Router();
@@ -13,6 +13,11 @@ router.use(requireSalesforceAuth);
 
 
 router.get("/:objectName", validateSalesforceObject, getSalesforceRecords);
+router.get(
+    "/:objectName/fields",
+    validateSalesforceObject,
+    getSalesforceObjectFields
+);
 router.get("/:objectName/:recordId", validateSalesforceObject, validateSalesforceRecordId, getSalesforceRecordById);
 router.post(
 	"/:objectName",

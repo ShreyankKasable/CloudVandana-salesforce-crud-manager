@@ -24,6 +24,8 @@ const mapSalesforceError = (error, operation) => {
             ? "You do not have permission to update this Salesforce record"
             : operation === "delete"
             ? "You do not have permission to delete this Salesforce record"
+            : operation === "metadata"
+            ? "You do not have permission to access Salesforce metadata"
             : operation === "get"
                 ? "You do not have permission to access this Salesforce record"
                 : "You do not have permission to access this Salesforce data";
@@ -68,6 +70,9 @@ const mapSalesforceError = (error, operation) => {
             : operation === "delete"
                 ? salesforceError?.message ||
                 "Salesforce rejected the record deletion"
+            : operation === "metadata"
+                ? salesforceError?.message ||
+                "Salesforce rejected the metadata request"
 
             : operation === "get"
                 ? "Salesforce rejected the record request"
@@ -84,6 +89,9 @@ const mapSalesforceError = (error, operation) => {
 
             : operation === "delete"
                 ? "SALESFORCE_DELETE_VALIDATION_ERROR"
+
+            : operation === "metadata"
+                ? "SALESFORCE_METADATA_ERROR"
 
             : operation === "get"
                 ? "SALESFORCE_RECORD_REQUEST_ERROR"
@@ -107,6 +115,9 @@ const mapSalesforceError = (error, operation) => {
 
         : operation === "delete"
             ? "Unable to delete Salesforce record"
+
+        : operation === "metadata"
+            ? "Unable to retrieve Salesforce metadata"
 
         : operation === "get"
             ? "Unable to retrieve Salesforce record"

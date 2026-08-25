@@ -1,4 +1,5 @@
 const AppError = require("../utils/AppError");
+const { getObjectFields } = require("../services/salesforceMetadata.service");
 
 const { getRecords, getRecordById, createRecord, updateRecord, deleteRecord } = require("../services/salesforce.service");
 
@@ -127,10 +128,26 @@ const deleteSalesforceRecord = async (req, res) => {
     });
 };
 
+const getSalesforceObjectFields = async (req, res) => {
+    const { objectName } = req.params;
+
+    const result = await getObjectFields({
+        objectName,
+        salesforceSession: req.session.salesforce,
+        sessionId: req.sessionID,
+    });
+
+    return res.status(200).json({
+        success: true,
+        data: result,
+    });
+};
+
 module.exports = {
     getSalesforceRecords,
     getSalesforceRecordById,
     createSalesforceRecord,
     updateSalesforceRecord,
-    deleteSalesforceRecord
+    deleteSalesforceRecord,
+    getSalesforceObjectFields,
 };
