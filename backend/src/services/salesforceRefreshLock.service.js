@@ -10,11 +10,12 @@ const RESULT_TTL = 15;
 const RETRY_DELAY = 100;
 const MAX_RETRIES = 50;
 
+// The sleep function role is to let the other request sleep for ms time which let the winner to generate RT and AT withput any interfare
 const sleep = (ms) => {
     return new Promise((resolve) => {
         return setTimeout(resolve, ms);
     });
-}
+};
 
 const getTokenFingerprint = (accessToken) => {
     return crypto
@@ -31,7 +32,7 @@ const applyTokensToSession = (
     salesforceSession.accessToken = tokens.accessToken;
     salesforceSession.refreshToken = tokens.refreshToken;
     salesforceSession.instanceUrl = tokens.instanceUrl || salesforceSession.instanceUrl;
-}
+};
 
 const releaseLock = async (lockKey, lockId) => {
 
@@ -108,7 +109,14 @@ const refreshSalesforceTokensWithLock = async ({
 
                 return refreshedTokens;
             } finally {
-                await releaseLock( lockKey, lockId );
+                try {
+                    await releaseLock(lockKey, lockId);
+                } catch (error) {
+                    console.error(
+                        "Failed to release Salesforce refresh lock:",
+                        error.message
+                    );
+                }
             }
         }
         await sleep(RETRY_DELAY);
@@ -120,7 +128,7 @@ const refreshSalesforceTokensWithLock = async ({
         503,
         "SALESFORCE_TOKEN_REFRESH_TIMEOUT"
     );   
-}
+};
 
 module.exports = {
     refreshSalesforceTokensWithLock,
