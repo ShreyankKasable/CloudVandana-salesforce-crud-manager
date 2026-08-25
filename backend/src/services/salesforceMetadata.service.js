@@ -38,7 +38,7 @@ const getObjectFields = async ({
                 type: field.type,
                 createable: field.createable,
                 updateable: field.updateable,
-                required: !field.nillable && !field.defaultedOnCreate,
+                required: field.createable && !field.nillable && !field.defaultedOnCreate,
                 options: (field.picklistValues || [])
                     .filter((option) => option.active)
                     .map(({ label, value }) => ({ label, value })),
