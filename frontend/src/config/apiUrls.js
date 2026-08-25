@@ -1,4 +1,24 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "");
+const DEFAULT_API_BASE_URL = "http://localhost:5000";
+
+const normalizeBaseUrl = (baseUrl) => baseUrl.replace(/\/+$/, "");
+
+const resolveApiBaseUrl = () => {
+  const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  if (configuredBaseUrl) {
+    return normalizeBaseUrl(configuredBaseUrl);
+  }
+
+  if (import.meta.env.PROD) {
+    console.warn(
+      "VITE_API_BASE_URL is not configured. Falling back to the local backend URL.",
+    );
+  }
+
+  return DEFAULT_API_BASE_URL;
+};
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 const buildUrl = (path) => `${API_BASE_URL}${path}`;
 

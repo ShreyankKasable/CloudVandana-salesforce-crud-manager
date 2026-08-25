@@ -3,19 +3,19 @@ import styled from "styled-components";
 
 const Backdrop = styled.div`
   position: fixed;
-  inset: var(--inset-fill);
+  inset: 0;
   z-index: var(--z-modal);
   display: grid;
   place-items: center;
-  padding: var(--space-xl);
+  padding: var(--space-lg);
   background: var(--overlay);
 `;
 
 const ModalContainer = styled.section`
-  width: min(var(--size-full), var(--layout-modal-width));
-  max-height: var(--layout-modal-max-height);
-  overflow: var(--overflow-auto);
-  padding: var(--space-modal);
+  width: min(100%, var(--modal-width));
+  max-height: var(--modal-max-height);
+  overflow: auto;
+  padding: var(--modal-padding);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
@@ -33,7 +33,7 @@ const Header = styled.header`
 `;
 
 const Title = styled.h2`
-  margin: var(--space-none);
+  margin: 0;
   color: var(--text-primary);
   font-size: var(--font-size-modal-title);
   line-height: var(--line-height-heading);
@@ -41,14 +41,14 @@ const Title = styled.h2`
 
 const CloseButton = styled.button`
   display: grid;
-  flex: var(--layout-flex-fixed);
+  flex: 0 0 auto;
   place-items: center;
-  width: var(--size-close-button);
-  height: var(--size-close-button);
+  width: var(--close-button-size);
+  height: var(--close-button-size);
   color: var(--text-secondary);
-  background: var(--background-transparent);
+  background: transparent;
   border-radius: var(--radius-sm);
-  font-size: var(--font-size-close);
+  font-size: var(--font-size-lg);
   line-height: var(--line-height-tight);
   cursor: pointer;
 
@@ -59,7 +59,7 @@ const CloseButton = styled.button`
 
   &:focus-visible {
     outline: var(--focus-ring-width) solid var(--primary-soft);
-    outline-offset: var(--focus-offset-sm);
+    outline-offset: var(--focus-ring-offset);
   }
 `;
 

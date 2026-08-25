@@ -10,14 +10,14 @@ const Message = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: var(--space-lg);
+  gap: var(--space-md);
   padding: ${({ $compact }) =>
     $compact
-      ? "var(--space-row-y) var(--space-lg)"
-      : "var(--space-lg) var(--space-error-x)"};
+      ? "var(--space-sm) var(--space-md)"
+      : "var(--space-md) var(--space-lg)"};
   color: var(--danger);
   background: var(--danger-soft);
-  border: var(--border-width) solid var(--danger-border-soft);
+  border: var(--border-width) solid var(--danger-border);
   border-left: var(--border-width-accent) solid var(--danger);
   border-radius: var(--radius-md);
 `;
@@ -29,18 +29,18 @@ const Content = styled.div`
 
 const Title = styled.strong`
   color: var(--text-primary);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-md);
 `;
 
 const Body = styled.p`
-  margin: var(--space-none);
+  margin: 0;
   color: var(--danger-text);
-  line-height: var(--line-height-body-tight);
+  line-height: var(--line-height-body);
 `;
 
 const ActionButton = styled.button`
   min-height: var(--control-height-sm);
-  padding: var(--space-none) var(--space-row-y);
+  padding: 0 var(--space-sm);
   color: var(--danger);
   background: var(--surface);
   border: var(--border-width) solid var(--danger-border);
@@ -55,8 +55,8 @@ const ActionButton = styled.button`
   }
 
   &:focus-visible {
-    outline: var(--focus-ring-width) solid var(--danger-border-soft);
-    outline-offset: var(--focus-offset-sm);
+    outline: var(--focus-ring-width) solid var(--danger-border);
+    outline-offset: var(--focus-ring-offset);
   }
 `;
 

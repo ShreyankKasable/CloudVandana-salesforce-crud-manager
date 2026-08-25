@@ -3,19 +3,19 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 const Backdrop = styled.div`
   position: fixed;
-  inset: var(--inset-fill);
+  inset: 0;
   z-index: var(--z-modal);
   display: grid;
   place-items: center;
-  padding: var(--space-xl);
+  padding: var(--space-lg);
   background: var(--overlay);
 `;
 
 const Dialog = styled.section`
   display: grid;
-  gap: var(--space-lg);
-  width: min(var(--size-full), var(--layout-dialog-width));
-  padding: var(--space-modal);
+  gap: var(--space-md);
+  width: min(100%, var(--dialog-width));
+  padding: var(--modal-padding);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
@@ -23,7 +23,7 @@ const Dialog = styled.section`
 `;
 
 const Label = styled.p`
-  margin: var(--space-none);
+  margin: 0;
   color: var(--danger);
   font-size: var(--font-size-2xs);
   font-weight: var(--font-weight-extra-bold);
@@ -32,14 +32,14 @@ const Label = styled.p`
 `;
 
 const Title = styled.h2`
-  margin: var(--space-none);
+  margin: 0;
   color: var(--text-primary);
-  font-size: var(--font-size-dialog-title);
+  font-size: var(--font-size-2xl);
   line-height: var(--line-height-heading);
 `;
 
 const Message = styled.p`
-  margin: var(--space-none);
+  margin: 0;
   color: var(--text-secondary);
   line-height: var(--line-height-copy);
 `;
@@ -48,13 +48,13 @@ const Actions = styled.div`
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
-  gap: var(--space-md);
-  margin-top: var(--space-sm);
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
 `;
 
 const SecondaryButton = styled.button`
   min-height: var(--control-height-md);
-  padding: var(--space-none) var(--space-lg);
+  padding: 0 var(--space-md);
   color: var(--text-primary);
   background: var(--surface);
   border: var(--border-width) solid var(--border-strong);
@@ -68,13 +68,13 @@ const SecondaryButton = styled.button`
 
   &:disabled {
     cursor: not-allowed;
-    opacity: var(--opacity-disabled-strong);
+    opacity: var(--disabled-opacity-strong);
   }
 `;
 
 const DangerButton = styled.button`
   min-height: var(--control-height-md);
-  padding: var(--space-none) var(--space-lg);
+  padding: 0 var(--space-md);
   color: var(--text-inverse);
   background: var(--danger);
   border-radius: var(--radius-md);
@@ -87,7 +87,7 @@ const DangerButton = styled.button`
 
   &:disabled {
     cursor: not-allowed;
-    opacity: var(--opacity-disabled-strong);
+    opacity: var(--disabled-opacity-strong);
   }
 `;
 

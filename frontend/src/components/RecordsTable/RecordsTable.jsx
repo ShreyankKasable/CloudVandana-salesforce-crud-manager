@@ -4,7 +4,7 @@ import EmptyState from "../EmptyState/EmptyState";
 import Loader from "../Loader/Loader";
 
 const TableContainer = styled.div`
-  overflow-x: var(--overflow-auto);
+  overflow-x: auto;
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
@@ -12,14 +12,14 @@ const TableContainer = styled.div`
 `;
 
 const Table = styled.table`
-  width: var(--size-full);
-  min-width: var(--layout-table-min-width);
+  width: 100%;
+  min-width: var(--table-min-width);
   border-collapse: collapse;
   text-align: left;
 `;
 
 const HeaderCell = styled.th`
-  padding: var(--space-row-y) var(--space-cell-x);
+  padding: var(--space-sm) var(--space-md);
   color: var(--text-secondary);
   background: var(--surface-muted);
   border-bottom: var(--border-width) solid var(--border);
@@ -31,8 +31,8 @@ const HeaderCell = styled.th`
 `;
 
 const Cell = styled.td`
-  max-width: var(--layout-table-cell-max);
-  padding: var(--space-notice-y) var(--space-cell-x);
+  max-width: var(--table-cell-max-width);
+  padding: var(--space-md);
   color: var(--text-primary);
   border-bottom: var(--border-width) solid var(--border);
   font-size: var(--font-size-base);
@@ -42,12 +42,12 @@ const Cell = styled.td`
 
 const Row = styled.tr`
   &:hover {
-    background: var(--table-row-hover);
+    background: var(--surface-hover);
   }
 `;
 
 const ActionsCell = styled(Cell)`
-  width: var(--table-actions-width);
+  width: 1%;
   white-space: nowrap;
 `;
 
@@ -59,13 +59,13 @@ const RowActions = styled.div`
 
 const ActionButton = styled.button`
   min-height: var(--control-height-sm);
-  padding: var(--space-none) var(--space-empty-gap);
+  padding: 0 var(--space-sm);
   color: ${({ $danger }) => ($danger ? "var(--danger)" : "var(--primary)")};
   background: var(--surface);
   border: var(--border-width) solid
     ${({ $danger }) => ($danger ? "var(--danger-border)" : "var(--border-strong)")};
   border-radius: var(--radius-sm);
-  font-size: var(--font-size-action);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-extra-bold);
   cursor: pointer;
 
@@ -76,15 +76,15 @@ const ActionButton = styled.button`
 
   &:focus-visible {
     outline: var(--focus-ring-width) solid var(--primary-soft);
-    outline-offset: var(--focus-offset-sm);
+    outline-offset: var(--focus-ring-offset);
   }
 `;
 
 const TableStatus = styled.div`
   display: flex;
   justify-content: center;
-  min-height: var(--control-height-login);
-  padding: var(--space-lg);
+  min-height: var(--control-height-xl);
+  padding: var(--space-md);
   color: var(--text-muted);
   background: var(--surface);
   font-size: var(--font-size-xs);

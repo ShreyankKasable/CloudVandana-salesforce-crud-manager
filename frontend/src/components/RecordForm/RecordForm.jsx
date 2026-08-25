@@ -11,7 +11,7 @@ const Field = styled.label`
   display: grid;
   gap: var(--space-xs);
   color: var(--text-secondary);
-  font-size: var(--font-size-form);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
 `;
 
@@ -26,14 +26,14 @@ const Required = styled.em`
   color: var(--danger);
   font-size: var(--font-size-2xs);
   font-style: normal;
-  letter-spacing: var(--letter-spacing-required);
+  letter-spacing: var(--letter-spacing-label);
   text-transform: uppercase;
 `;
 
 const inputStyles = `
-  width: var(--size-full);
+  width: 100%;
   min-height: var(--control-height-input);
-  padding: var(--space-none) var(--space-md);
+  padding: 0 var(--space-sm);
   color: var(--text-primary);
   background: var(--surface);
   border: var(--border-width) solid var(--border-strong);
@@ -62,15 +62,15 @@ const Select = styled.select`
 const CheckboxRow = styled.span`
   display: flex;
   align-items: center;
-  gap: var(--space-checkbox-gap);
+  gap: var(--space-xs);
   min-height: var(--control-height-input);
   color: var(--text-primary);
   font-weight: var(--font-weight-medium);
 `;
 
 const Checkbox = styled.input`
-  width: var(--size-checkbox);
-  height: var(--size-checkbox);
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
   accent-color: var(--primary);
 `;
 
@@ -84,7 +84,7 @@ const Actions = styled.div`
 
 const SecondaryButton = styled.button`
   min-height: var(--control-height-md);
-  padding: var(--space-none) var(--space-lg);
+  padding: 0 var(--space-md);
   color: var(--text-primary);
   background: var(--surface);
   border: var(--border-width) solid var(--border-strong);
@@ -98,13 +98,13 @@ const SecondaryButton = styled.button`
 
   &:disabled {
     cursor: not-allowed;
-    opacity: var(--opacity-disabled-strong);
+    opacity: var(--disabled-opacity-strong);
   }
 `;
 
 const PrimaryButton = styled.button`
   min-height: var(--control-height-md);
-  padding: var(--space-none) var(--space-lg);
+  padding: 0 var(--space-md);
   color: var(--text-inverse);
   background: var(--primary);
   border-radius: var(--radius-md);
@@ -117,13 +117,13 @@ const PrimaryButton = styled.button`
 
   &:disabled {
     cursor: not-allowed;
-    opacity: var(--opacity-disabled-strong);
+    opacity: var(--disabled-opacity-strong);
   }
 `;
 
 const NoFields = styled.p`
-  margin: var(--space-none);
-  padding: var(--space-lg);
+  margin: 0;
+  padding: var(--space-md);
   color: var(--text-secondary);
   background: var(--surface-muted);
   border: var(--border-width) solid var(--border);

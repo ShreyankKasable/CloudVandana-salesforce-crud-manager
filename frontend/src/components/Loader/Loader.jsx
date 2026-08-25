@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 
 const spin = keyframes`
   to {
-    transform: rotate(var(--rotation-full));
+    transform: rotate(360deg);
   }
 `;
 
@@ -10,24 +10,24 @@ const LoaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   min-height: ${({ $compact }) =>
-    $compact ? "var(--loader-compact-min-height)" : "var(--layout-loader-min-height)"};
+    $compact ? "auto" : "var(--loader-min-height)"};
   padding: ${({ $compact }) =>
     $compact
-      ? "var(--space-3xs) var(--space-none)"
-      : "var(--space-3xl)"};
+      ? "var(--space-2xs) 0"
+      : "var(--space-2xl)"};
   color: var(--text-secondary);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-md);
 `;
 
 const Spinner = styled.span`
-  width: var(--size-spinner);
-  height: var(--size-spinner);
-  border: var(--border-width-spinner) solid var(--border);
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border: 2px solid var(--border);
   border-top-color: var(--primary);
-  border-radius: var(--radius-round);
-  animation: ${spin} var(--animation-duration-fast) linear infinite;
+  border-radius: var(--radius-pill);
+  animation: ${spin} var(--spinner-duration) linear infinite;
 `;
 
 const Loader = ({ label = "Loading", compact = false }) => (

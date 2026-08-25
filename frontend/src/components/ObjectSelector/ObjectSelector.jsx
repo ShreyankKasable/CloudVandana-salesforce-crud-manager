@@ -4,7 +4,7 @@ const Field = styled.label`
   display: grid;
   gap: var(--space-xs);
   color: var(--text-secondary);
-  font-size: var(--font-size-action);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
 `;
 
@@ -14,9 +14,9 @@ const LabelText = styled.span`
 `;
 
 const Select = styled.select`
-  width: min(var(--size-full), var(--layout-selector-width));
+  width: min(100%, var(--selector-width));
   min-height: var(--control-height-lg);
-  padding: var(--space-none) var(--size-empty-mark) var(--space-none) var(--space-md);
+  padding: 0 var(--space-2xl) 0 var(--space-sm);
   color: var(--text-primary);
   background: var(--surface);
   border: var(--border-width) solid var(--border-strong);

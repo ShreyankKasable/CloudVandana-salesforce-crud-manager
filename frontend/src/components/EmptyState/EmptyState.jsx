@@ -3,9 +3,9 @@ import styled from "styled-components";
 const EmptyStateContainer = styled.div`
   display: grid;
   place-items: center;
-  gap: var(--space-empty-gap);
-  min-height: var(--layout-empty-min-height);
-  padding: var(--space-3xl);
+  gap: var(--space-sm);
+  min-height: var(--empty-min-height);
+  padding: var(--space-2xl);
   color: var(--text-secondary);
   text-align: center;
 `;
@@ -13,8 +13,8 @@ const EmptyStateContainer = styled.div`
 const Mark = styled.span`
   display: grid;
   place-items: center;
-  width: var(--size-empty-mark);
-  height: var(--size-empty-mark);
+  width: var(--empty-mark-size);
+  height: var(--empty-mark-size);
   color: var(--primary);
   background: var(--primary-soft);
   border: var(--border-width) solid var(--border);
@@ -23,15 +23,15 @@ const Mark = styled.span`
 `;
 
 const Title = styled.h3`
-  margin: var(--space-2xs) var(--space-none) var(--space-none);
+  margin: var(--space-2xs) 0 0;
   color: var(--text-primary);
-  font-size: var(--font-size-empty-title);
-  line-height: var(--line-height-empty-title);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-heading);
 `;
 
 const Text = styled.p`
-  max-width: var(--layout-empty-text-max);
-  margin: var(--space-none);
+  max-width: var(--empty-text-max-width);
+  margin: 0;
   line-height: var(--line-height-copy);
 `;
 
