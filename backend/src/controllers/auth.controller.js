@@ -86,11 +86,7 @@ const salesforceCallback = async (req, res) => {
 
     delete req.session.salesforceOAuth;
 
-    return res.json({
-        success: true,
-        message: "Salesforce authentication successful",
-        instanceUrl: tokens.instanceUrl,
-    });
+    return res.redirect(`${config.frontendUrl}/?auth=success`);
 };
 
 module.exports = {
