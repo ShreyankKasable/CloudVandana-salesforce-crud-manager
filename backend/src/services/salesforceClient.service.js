@@ -1,6 +1,6 @@
 const AppError = require("../utils/AppError");
 
-const { refreshSalesforceAccessToken } = require("./salesforceAuth.service");
+const { refreshSalesforceTokensWithLock } = require("./salesforceRefreshLock.service");
 
 const isExpiredSalesforceSession = (error) => {
     const status =
@@ -18,6 +18,7 @@ const isExpiredSalesforceSession = (error) => {
 
 const executeSalesforceRequest = async ({
     salesforceSession,
+    sessionId,
     request,
 }) => {
 
@@ -44,17 +45,10 @@ const executeSalesforceRequest = async ({
             );
         }
 
-        const refreshedTokens = await refreshSalesforceAccessToken(
-                salesforceSession.refreshToken
-            );
-
-
-        salesforceSession.accessToken = refreshedTokens.accessToken;
-
-        salesforceSession.refreshToken = refreshedTokens.refreshToken;
-
-        salesforceSession.instanceUrl = refreshedTokens.instanceUrl || salesforceSession.instanceUrl;
-
+        await refreshSalesforceTokensWithLock({
+            sessionId,
+            salesforceSession,
+        });
 
         return await request({
             accessToken:

@@ -19,6 +19,7 @@ const getSalesforceRecords = async (req, res) => {
         objectName,
         page,
         salesforceSession: req.session.salesforce,
+        sessionId: req.sessionID
     });
 
     return res.status(200).json({
@@ -40,6 +41,7 @@ const getSalesforceRecordById = async (req, res) => {
         objectName,
         recordId,
         salesforceSession: req.session.salesforce,
+        sessionId: req.sessionID
     });
 
     res.status(200).json({
@@ -60,6 +62,7 @@ const createSalesforceRecord = async (req, res) => {
         objectName,
         data,
         salesforceSession: req.session.salesforce,
+        sessionId: req.sessionID
     });
 
     return res.status(201).json({
@@ -86,6 +89,7 @@ const updateSalesforceRecord = async (req, res) => {
         recordId,
         data,
         salesforceSession: req.session.salesforce,
+        sessionId: req.sessionID
     });
 
     return res.status(200).json({
@@ -110,6 +114,7 @@ const deleteSalesforceRecord = async (req, res) => {
         objectName,
         recordId,
         salesforceSession: req.session.salesforce,
+        sessionId: req.sessionID
     });
 
     return res.status(200).json({

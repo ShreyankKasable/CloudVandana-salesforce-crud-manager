@@ -13,6 +13,7 @@ const getRecords = async ({
     objectName,
     page,
     salesforceSession,
+    sessionId
 }) => {
 
     const objectConfig = SALESFORCE_OBJECTS[objectName];
@@ -43,6 +44,7 @@ const getRecords = async ({
     try {
         const response = await executeSalesforceRequest({
             salesforceSession,
+            sessionId,
             request: ({ accessToken, instanceUrl }) => axios.get(
                 `${instanceUrl}/services/data/${config.salesforceApiVersion}/query`,
                 {
@@ -82,6 +84,7 @@ const getRecordById = async ({
     objectName,
     recordId,
     salesforceSession,
+    sessionId
 }) => {
     const objectConfig = SALESFORCE_OBJECTS[objectName];
 
@@ -94,6 +97,7 @@ const getRecordById = async ({
 
         const response = await executeSalesforceRequest({
             salesforceSession,
+            sessionId,
             request: ({ accessToken, instanceUrl }) => axios.get(
                 `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
                 {
@@ -123,12 +127,14 @@ const createRecord = async ({
     objectName,
     data,
     salesforceSession,
+    sessionId
 }) => {
 
     try {
 
         const response = await executeSalesforceRequest({
             salesforceSession,
+            sessionId,
             request: ({ accessToken, instanceUrl }) => axios.post(
                 `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}`,
                 data,
@@ -155,10 +161,12 @@ const updateRecord = async ({
     recordId,
     data,
     salesforceSession,
+    sessionId
 }) => {
     try {
         await executeSalesforceRequest({
             salesforceSession,
+            sessionId,
             request: ({ accessToken, instanceUrl }) => axios.patch(
                 `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
                 data,
@@ -187,10 +195,12 @@ const deleteRecord = async ({
     objectName,
     recordId,
     salesforceSession,
+    sessionId
 }) => {
     try {
         await executeSalesforceRequest({
             salesforceSession,
+            sessionId,
             request: ({ accessToken, instanceUrl }) => axios.delete(
                 `${instanceUrl}/services/data/${config.salesforceApiVersion}/sobjects/${objectName}/${recordId}`,
                 {
