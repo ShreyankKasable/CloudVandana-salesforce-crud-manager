@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Field = styled.label`
   display: grid;
-  gap: var(--space-xs);
+  gap: var(--space-2xs);
   color: var(--text-secondary);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
@@ -21,7 +21,15 @@ const Select = styled.select`
   background: var(--surface);
   border: var(--border-width) solid var(--border-strong);
   border-radius: var(--radius-md);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  &:hover {
+    border-color: var(--primary-border);
+  }
 
   &:focus {
     border-color: var(--primary);

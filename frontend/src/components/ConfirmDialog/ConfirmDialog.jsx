@@ -23,8 +23,13 @@ const Dialog = styled.section`
 `;
 
 const Label = styled.p`
+  width: fit-content;
   margin: 0;
   color: var(--danger);
+  background: var(--danger-soft);
+  border: var(--border-width) solid var(--danger-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2xs) var(--space-sm);
   font-size: var(--font-size-2xs);
   font-weight: var(--font-weight-extra-bold);
   letter-spacing: var(--letter-spacing-label);
@@ -61,6 +66,10 @@ const SecondaryButton = styled.button`
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    opacity var(--transition-fast);
 
   &:hover:not(:disabled) {
     background: var(--surface-muted);
@@ -80,6 +89,9 @@ const DangerButton = styled.button`
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-extra-bold);
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    opacity var(--transition-fast);
 
   &:hover:not(:disabled) {
     background: var(--danger-hover);

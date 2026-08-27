@@ -24,12 +24,12 @@ const ModalContainer = styled.section`
 
 const Header = styled.header`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: var(--space-lg);
-  padding-bottom: var(--space-xl);
+  gap: var(--space-md);
+  padding-bottom: var(--space-lg);
   border-bottom: var(--border-width) solid var(--border);
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
 `;
 
 const Title = styled.h2`
@@ -46,15 +46,22 @@ const CloseButton = styled.button`
   width: var(--close-button-size);
   height: var(--close-button-size);
   color: var(--text-secondary);
-  background: transparent;
+  background: var(--surface-muted);
+  border: var(--border-width) solid var(--border);
   border-radius: var(--radius-sm);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-extra-bold);
   line-height: var(--line-height-tight);
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 
   &:hover {
     color: var(--text-primary);
-    background: var(--surface-muted);
+    background: var(--surface-hover);
+    border-color: var(--border-strong);
   }
 
   &:focus-visible {
@@ -88,7 +95,7 @@ const RecordModal = ({ title, children, onClose }) => {
         <Header>
           <Title id="modal-title">{title}</Title>
           <CloseButton type="button" aria-label="Close" onClick={onClose}>
-            x
+            X
           </CloseButton>
         </Header>
         {children}

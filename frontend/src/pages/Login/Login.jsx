@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { API_URLS } from "../../config/apiUrls";
 
 const Shell = styled.main`
-  min-height: 100svh;
+  min-height: var(--viewport-min-height);
   display: grid;
   grid-template-columns: repeat(
     auto-fit,
@@ -18,14 +18,12 @@ const Intro = styled.section`
   min-height: var(--login-intro-min-height);
   padding: var(--panel-padding);
   color: var(--text-inverse);
-  background:
-    linear-gradient(var(--hero-scrim), var(--hero-scrim)),
-    var(--hero-gradient);
+  background: var(--login-panel-bg);
 `;
 
 const Eyebrow = styled.p`
   margin: 0;
-  color: var(--hero-text-muted);
+  color: var(--login-panel-muted);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-extra-bold);
   letter-spacing: var(--letter-spacing-heading);
@@ -40,7 +38,7 @@ const IntroCopy = styled.div`
 
 const Kicker = styled.p`
   margin: 0;
-  color: var(--hero-accent);
+  color: var(--primary-border);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-extra-bold);
   letter-spacing: var(--letter-spacing-label);
@@ -57,16 +55,21 @@ const Title = styled.h1`
 const IntroText = styled.p`
   max-width: var(--login-text-max-width);
   margin: 0;
-  color: var(--hero-text-secondary);
+  color: var(--login-panel-muted);
   font-size: var(--font-size-md);
-  line-height: var(--line-height-hero);
+  line-height: var(--line-height-loose);
 `;
 
 const IntroFooter = styled.div`
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  color: var(--hero-text-muted);
+  width: fit-content;
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--login-panel-muted);
+  background: var(--login-panel-soft);
+  border: var(--border-width) solid var(--login-panel-soft);
+  border-radius: var(--radius-pill);
   font-size: var(--font-size-sm);
 `;
 
@@ -75,7 +78,7 @@ const StatusDot = styled.span`
   height: var(--status-dot-size);
   background: var(--status-online);
   border-radius: var(--radius-pill);
-  box-shadow: 0 0 0 5px var(--success-soft);
+  box-shadow: var(--status-ring);
 `;
 
 const Panel = styled.section`
@@ -92,10 +95,10 @@ const PanelMark = styled.div`
   place-items: center;
   width: var(--brand-mark-size);
   height: var(--brand-mark-size);
-  margin-bottom: var(--space-3xl);
+  margin-bottom: var(--space-2xl);
   color: var(--text-inverse);
   background: var(--primary);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   font-weight: var(--font-weight-black);
 `;
 
@@ -134,6 +137,9 @@ const SalesforceButton = styled.button`
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-extra-bold);
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
 
   &:hover {
     background: var(--primary-hover);
@@ -174,13 +180,13 @@ const redirectToSalesforce = () => {
 const Login = () => (
   <Shell>
     <Intro aria-labelledby="login-title">
-      <Eyebrow>CloudVandana / workspace</Eyebrow>
+      <Eyebrow>Salesforce workspace</Eyebrow>
       <IntroCopy>
         <Kicker>Salesforce operations, kept clear.</Kicker>
         <Title id="login-title">Salesforce CRUD Manager</Title>
         <IntroText>
-          Connect your Salesforce org to view, create, update, and manage
-          records from one focused workspace.
+          Connect your Salesforce org and manage CRM records from a focused
+          operations workspace.
         </IntroText>
       </IntroCopy>
       <IntroFooter>

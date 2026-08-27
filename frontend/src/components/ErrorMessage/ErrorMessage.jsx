@@ -16,10 +16,10 @@ const Message = styled.div`
       ? "var(--space-sm) var(--space-md)"
       : "var(--space-md) var(--space-lg)"};
   color: var(--danger);
-  background: var(--danger-soft);
+  background: var(--surface);
   border: var(--border-width) solid var(--danger-border);
-  border-left: var(--border-width-accent) solid var(--danger);
   border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
 `;
 
 const Content = styled.div`
@@ -39,8 +39,8 @@ const Body = styled.p`
 `;
 
 const ActionButton = styled.button`
-  min-height: var(--control-height-sm);
-  padding: 0 var(--space-sm);
+  min-height: var(--control-height-md);
+  padding: 0 var(--space-md);
   color: var(--danger);
   background: var(--surface);
   border: var(--border-width) solid var(--danger-border);
@@ -48,6 +48,10 @@ const ActionButton = styled.button`
   font-weight: var(--font-weight-bold);
   white-space: nowrap;
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 
   &:hover {
     color: var(--text-inverse);

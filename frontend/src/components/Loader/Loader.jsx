@@ -19,12 +19,13 @@ const LoaderContainer = styled.div`
       : "var(--space-2xl)"};
   color: var(--text-secondary);
   font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
 `;
 
 const Spinner = styled.span`
   width: var(--spinner-size);
   height: var(--spinner-size);
-  border: 2px solid var(--border);
+  border: var(--spinner-border-width) solid var(--surface-subtle);
   border-top-color: var(--primary);
   border-radius: var(--radius-pill);
   animation: ${spin} var(--spinner-duration) linear infinite;

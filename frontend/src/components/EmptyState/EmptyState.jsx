@@ -3,7 +3,7 @@ import styled from "styled-components";
 const EmptyStateContainer = styled.div`
   display: grid;
   place-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   min-height: var(--empty-min-height);
   padding: var(--space-2xl);
   color: var(--text-secondary);
@@ -15,10 +15,10 @@ const Mark = styled.span`
   place-items: center;
   width: var(--empty-mark-size);
   height: var(--empty-mark-size);
-  color: var(--primary);
-  background: var(--primary-soft);
+  color: var(--text-secondary);
+  background: var(--surface-subtle);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   font-weight: var(--font-weight-extra-bold);
 `;
 
@@ -32,6 +32,7 @@ const Title = styled.h3`
 const Text = styled.p`
   max-width: var(--empty-text-max-width);
   margin: 0;
+  color: var(--text-muted);
   line-height: var(--line-height-copy);
 `;
 

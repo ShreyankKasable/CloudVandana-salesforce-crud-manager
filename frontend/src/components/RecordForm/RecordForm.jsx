@@ -4,7 +4,11 @@ const NUMBER_FIELD_TYPES = new Set(["currency", "double", "int", "percent"]);
 
 const Form = styled.form`
   display: grid;
-  gap: var(--space-lg);
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--form-field-min-width)), 1fr)
+  );
+  gap: var(--space-md);
 `;
 
 const Field = styled.label`
@@ -38,6 +42,14 @@ const inputStyles = `
   background: var(--surface);
   border: var(--border-width) solid var(--border-strong);
   border-radius: var(--radius-md);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
+
+  &:hover:not(:disabled) {
+    border-color: var(--primary-border);
+  }
 
   &:focus {
     border-color: var(--primary);
@@ -64,7 +76,11 @@ const CheckboxRow = styled.span`
   align-items: center;
   gap: var(--space-xs);
   min-height: var(--control-height-input);
+  padding: 0 var(--space-sm);
   color: var(--text-primary);
+  background: var(--surface-muted);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
   font-weight: var(--font-weight-medium);
 `;
 
@@ -79,7 +95,9 @@ const Actions = styled.div`
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: var(--space-md);
-  padding-top: var(--space-sm);
+  grid-column: 1 / -1;
+  padding-top: var(--space-md);
+  border-top: var(--border-width) solid var(--border);
 `;
 
 const SecondaryButton = styled.button`
@@ -91,6 +109,10 @@ const SecondaryButton = styled.button`
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    opacity var(--transition-fast);
 
   &:hover:not(:disabled) {
     background: var(--surface-muted);
@@ -110,6 +132,9 @@ const PrimaryButton = styled.button`
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-extra-bold);
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    opacity var(--transition-fast);
 
   &:hover:not(:disabled) {
     background: var(--primary-hover);
@@ -122,6 +147,7 @@ const PrimaryButton = styled.button`
 `;
 
 const NoFields = styled.p`
+  grid-column: 1 / -1;
   margin: 0;
   padding: var(--space-md);
   color: var(--text-secondary);

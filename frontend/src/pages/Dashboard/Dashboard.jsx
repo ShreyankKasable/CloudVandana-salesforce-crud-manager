@@ -20,32 +20,43 @@ import {
 } from "./dashboardRecordUtils";
 
 const Page = styled.main`
-  min-height: 100svh;
+  min-height: var(--viewport-min-height);
   padding: var(--page-padding);
   color: var(--text-primary);
   background: var(--background);
 `;
 
 const Shell = styled.div`
+  display: grid;
+  gap: var(--space-lg);
   width: min(100%, var(--page-max-width));
   margin: 0 auto;
 `;
 
 const Notice = styled.div`
-  margin-bottom: var(--space-md);
-  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   color: var(--success);
-  background: var(--success-soft);
+  background: var(--surface);
   border: var(--border-width) solid var(--success-border);
-  border-left: var(--border-width-accent) solid var(--success);
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-bold);
+  box-shadow: var(--shadow-xs);
+
+  &::before {
+    content: "";
+    width: var(--status-dot-size);
+    height: var(--status-dot-size);
+    background: var(--success);
+    border-radius: var(--radius-pill);
+  }
 `;
 
 const ErrorStack = styled.div`
   display: grid;
   gap: var(--space-md);
-  margin-bottom: var(--space-md);
 `;
 
 const Dashboard = () => {

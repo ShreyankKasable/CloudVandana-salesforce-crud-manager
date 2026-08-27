@@ -3,13 +3,19 @@ import ObjectSelector from "../../components/ObjectSelector/ObjectSelector";
 
 const Toolbar = styled.section`
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(100%, var(--login-column-min)), 1fr)
-  );
-  align-items: end;
-  gap: var(--space-md);
-  padding: var(--space-lg) 0;
+  grid-template-columns: minmax(var(--toolbar-column-min), auto) 1fr auto;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
 `;
 
 const ToolbarMeta = styled.div`
@@ -20,7 +26,7 @@ const ToolbarMeta = styled.div`
 
 const MetaLabel = styled.span`
   color: var(--text-primary);
-  font-weight: var(--font-weight-black);
+  font-weight: var(--font-weight-extra-bold);
 `;
 
 const MetaText = styled.span`
@@ -32,6 +38,7 @@ const PrimaryButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  justify-self: end;
   min-height: var(--control-height-lg);
   padding: 0 var(--space-md);
   color: var(--text-inverse);
@@ -40,6 +47,9 @@ const PrimaryButton = styled.button`
   font-weight: var(--font-weight-black);
   white-space: nowrap;
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    opacity var(--transition-fast);
 
   &:hover:not(:disabled) {
     background: var(--primary-hover);
@@ -53,6 +63,11 @@ const PrimaryButton = styled.button`
   &:focus-visible {
     outline: var(--focus-ring-width) solid var(--primary-soft);
     outline-offset: var(--focus-ring-offset-lg);
+  }
+
+  @media (max-width: 760px) {
+    width: 100%;
+    justify-self: stretch;
   }
 `;
 

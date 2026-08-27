@@ -3,6 +3,7 @@ import { formatDisplayValue } from "./dashboardRecordUtils";
 
 const DetailList = styled.dl`
   display: grid;
+  gap: var(--space-xs);
   margin: 0;
 `;
 
@@ -10,12 +11,10 @@ const DetailRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-md);
-  padding: var(--space-sm) 0;
-  border-bottom: var(--border-width) solid var(--border);
-
-  &:last-child {
-    border-bottom: 0;
-  }
+  padding: var(--space-sm);
+  background: var(--surface-muted);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
 `;
 
 const DetailTerm = styled.dt`
@@ -29,6 +28,7 @@ const DetailValue = styled.dd`
   flex: 2 1 var(--login-column-min);
   margin: 0;
   color: var(--text-primary);
+  font-size: var(--font-size-md);
   overflow-wrap: anywhere;
   line-height: var(--line-height-body);
 `;

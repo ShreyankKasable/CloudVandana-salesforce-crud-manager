@@ -8,7 +8,7 @@ const TableContainer = styled.div`
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-xs);
 `;
 
 const Table = styled.table`
@@ -19,9 +19,12 @@ const Table = styled.table`
 `;
 
 const HeaderCell = styled.th`
+  position: sticky;
+  top: 0;
+  z-index: 1;
   padding: var(--space-sm) var(--space-md);
   color: var(--text-secondary);
-  background: var(--surface-muted);
+  background: var(--surface-subtle);
   border-bottom: var(--border-width) solid var(--border);
   font-size: var(--font-size-2xs);
   font-weight: var(--font-weight-extra-bold);
@@ -32,22 +35,30 @@ const HeaderCell = styled.th`
 
 const Cell = styled.td`
   max-width: var(--table-cell-max-width);
-  padding: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
   color: var(--text-primary);
   border-bottom: var(--border-width) solid var(--border);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-md);
   overflow-wrap: anywhere;
   vertical-align: middle;
 `;
 
 const Row = styled.tr`
+  &:nth-child(even) {
+    background: var(--surface-muted);
+  }
+
   &:hover {
-    background: var(--surface-hover);
+    background: var(--surface-selected);
+  }
+
+  &:last-child ${Cell} {
+    border-bottom: 0;
   }
 `;
 
 const ActionsCell = styled(Cell)`
-  width: 1%;
+  width: var(--table-actions-width);
   white-space: nowrap;
 `;
 
@@ -61,17 +72,23 @@ const ActionButton = styled.button`
   min-height: var(--control-height-sm);
   padding: 0 var(--space-sm);
   color: ${({ $danger }) => ($danger ? "var(--danger)" : "var(--primary)")};
-  background: var(--surface);
+  background: ${({ $danger }) =>
+    $danger ? "var(--surface)" : "var(--primary-soft)"};
   border: var(--border-width) solid
-    ${({ $danger }) => ($danger ? "var(--danger-border)" : "var(--border-strong)")};
+    ${({ $danger }) => ($danger ? "var(--danger-border)" : "var(--primary-border)")};
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-extra-bold);
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
 
   &:hover {
+    color: ${({ $danger }) => ($danger ? "var(--danger)" : "var(--primary-hover)")};
     background: ${({ $danger }) =>
-      $danger ? "var(--danger-soft)" : "var(--primary-soft)"};
+      $danger ? "var(--danger-soft)" : "var(--surface-selected)"};
   }
 
   &:focus-visible {
@@ -83,10 +100,12 @@ const ActionButton = styled.button`
 const TableStatus = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   min-height: var(--control-height-xl);
   padding: var(--space-md);
   color: var(--text-muted);
-  background: var(--surface);
+  background: var(--surface-muted);
+  border-top: var(--border-width) solid var(--border);
   font-size: var(--font-size-xs);
 `;
 
@@ -131,10 +150,12 @@ const RecordsTable = ({
 
   if (!loading && records.length === 0) {
     return (
-      <EmptyState
-        title={`No ${objectLabel || "records"} found`}
-        text="Create a record or switch to another Salesforce object."
-      />
+      <TableContainer>
+        <EmptyState
+          title={`No ${objectLabel || "records"} found`}
+          text="Create a record or switch to another Salesforce object."
+        />
+      </TableContainer>
     );
   }
 

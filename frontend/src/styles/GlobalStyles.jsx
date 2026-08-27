@@ -2,47 +2,51 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
   :root {
-    --background: #f4f7fb;
+    --background: #f6f8fb;
     --surface: #ffffff;
-    --surface-muted: #eef3f8;
-    --surface-hover: #f9fbfd;
+    --surface-muted: #f8fafc;
+    --surface-subtle: #eef3f8;
+    --surface-hover: #f2f6fb;
+    --surface-selected: #edf5ff;
 
-    --text-primary: #17202a;
-    --text-secondary: #5b6673;
-    --text-muted: #7a8694;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-muted: #6b7280;
     --text-inverse: #ffffff;
 
-    --border: #d7e0ea;
-    --border-strong: #afbccb;
+    --border: #e1e7ef;
+    --border-strong: #c7d2e0;
 
-    --primary: #1769aa;
-    --primary-hover: #0f568d;
-    --primary-soft: #e8f3fb;
+    --primary: #1d4ed8;
+    --primary-hover: #1e40af;
+    --primary-soft: #eaf2ff;
+    --primary-border: #bdd3ff;
 
     --danger: #b42318;
-    --danger-hover: #961f16;
+    --danger-hover: #8f1d15;
     --danger-text: #7a2e28;
-    --danger-soft: #fcebea;
-    --danger-border: rgba(180, 35, 24, 0.25);
+    --danger-soft: #fff1f0;
+    --danger-border: #f3b7b1;
 
-    --success: #1f7a4d;
-    --success-soft: #e8f6ee;
-    --success-border: rgba(31, 122, 77, 0.18);
+    --success: #12704a;
+    --success-soft: #e8f7ef;
+    --success-border: #b7e4ca;
 
-    --overlay: rgba(23, 32, 42, 0.58);
-    --hero-gradient: linear-gradient(135deg, #17324d 0%, #1769aa 52%, #1f7a4d 100%);
-    --hero-scrim: rgba(23, 32, 42, 0.18);
-    --hero-text-muted: rgba(255, 255, 255, 0.78);
-    --hero-text-secondary: rgba(255, 255, 255, 0.82);
-    --hero-accent: #d7ebff;
-    --status-online: #70d49c;
+    --overlay: rgba(15, 23, 42, 0.54);
+    --login-panel-bg: #0f2746;
+    --login-panel-muted: rgba(255, 255, 255, 0.74);
+    --login-panel-soft: rgba(255, 255, 255, 0.1);
+    --status-online: #22c55e;
+    --status-ring: 0 0 0 5px var(--success-soft);
 
-    --shadow-sm: 0 1px 2px rgba(23, 32, 42, 0.06);
-    --shadow-md: 0 12px 32px rgba(23, 32, 42, 0.12);
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --shadow-sm: 0 8px 24px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 18px 45px rgba(15, 23, 42, 0.16);
+    --transition-fast: 160ms ease;
 
     --radius-sm: 4px;
-    --radius-md: 6px;
-    --radius-lg: 8px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
     --radius-pill: 999px;
 
     --space-2xs: 0.25rem;
@@ -54,9 +58,10 @@ const GlobalStyles = createGlobalStyle`
     --space-2xl: 2rem;
     --space-3xl: 3rem;
 
-    --page-padding: clamp(1.25rem, 4vw, 3rem);
-    --panel-padding: clamp(2rem, 6vw, 5rem);
+    --page-padding: clamp(1rem, 3vw, 2rem);
+    --panel-padding: clamp(1.5rem, 5vw, 4rem);
     --modal-padding: clamp(1.25rem, 3vw, 1.75rem);
+    --viewport-min-height: 100svh;
 
     --font-size-2xs: 0.72rem;
     --font-size-xs: 0.78rem;
@@ -64,12 +69,12 @@ const GlobalStyles = createGlobalStyle`
     --font-size-md: 0.9rem;
     --font-size-base: 1rem;
     --font-size-lg: 1.15rem;
-    --font-size-xl: 1.35rem;
-    --font-size-2xl: 1.4rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.45rem;
     --font-size-modal-title: clamp(1.25rem, 3vw, 1.55rem);
-    --font-size-panel-title: clamp(1.75rem, 4vw, 2.8rem);
-    --font-size-page-title: clamp(2rem, 5vw, 3.4rem);
-    --font-size-display: clamp(2.6rem, 6vw, 5.4rem);
+    --font-size-panel-title: clamp(1.7rem, 3vw, 2.25rem);
+    --font-size-page-title: clamp(1.65rem, 3vw, 2.25rem);
+    --font-size-display: clamp(2rem, 5vw, 3.75rem);
 
     --font-weight-medium: 500;
     --font-weight-bold: 700;
@@ -98,10 +103,10 @@ const GlobalStyles = createGlobalStyle`
     --spinner-duration: 0.8s;
 
     --control-height-sm: 2rem;
-    --control-height-md: 2.5rem;
-    --control-height-input: 2.65rem;
-    --control-height-lg: 2.75rem;
-    --control-height-xl: 3.25rem;
+    --control-height-md: 2.4rem;
+    --control-height-input: 2.55rem;
+    --control-height-lg: 2.65rem;
+    --control-height-xl: 3rem;
 
     --status-dot-size: 0.55rem;
     --checkbox-size: 1.1rem;
@@ -111,23 +116,28 @@ const GlobalStyles = createGlobalStyle`
     --empty-mark-size: 2.5rem;
     --brand-mark-size: 3rem;
 
-    --page-max-width: 78rem;
+    --page-max-width: 80rem;
+    --dashboard-subtitle-width: 44rem;
     --login-column-min: 22rem;
-    --login-intro-min-height: 34rem;
+    --login-intro-min-height: 32rem;
     --login-content-max-width: 40rem;
     --login-title-max-width: 38rem;
     --login-text-max-width: 31rem;
     --modal-width: 42rem;
     --modal-max-height: min(90svh, 52rem);
     --dialog-width: 32rem;
-    --loader-min-height: 14rem;
+    --loader-min-height: 12rem;
     --empty-min-height: 16rem;
     --empty-text-max-width: 34rem;
-    --table-min-width: 760px;
-    --table-cell-max-width: 18rem;
-    --selector-width: 220px;
+    --table-min-width: 820px;
+    --table-cell-max-width: 17rem;
+    --table-actions-width: 1%;
+    --selector-width: 240px;
+    --toolbar-column-min: 16rem;
+    --form-field-min-width: 16rem;
     --detail-label-width: 8rem;
     --infinite-scroll-root-margin: 240px;
+    --spinner-border-width: 2px;
     --z-modal: 10;
 
     color: var(--text-primary);

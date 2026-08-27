@@ -9,13 +9,14 @@ const WorkspaceHeader = styled.section`
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-md);
-  margin: var(--space-xs) 0 var(--space-md);
+  margin-top: var(--space-xs);
 `;
 
 const WorkspaceTitle = styled.h2`
   margin: 0;
   color: var(--text-primary);
   font-size: var(--font-size-xl);
+  line-height: var(--line-height-heading);
 `;
 
 const WorkspaceText = styled.p`
@@ -25,7 +26,14 @@ const WorkspaceText = styled.p`
 `;
 
 const MetaText = styled.span`
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-sm);
   color: var(--text-secondary);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
   font-size: var(--font-size-sm);
 `;
 
@@ -33,7 +41,7 @@ const StatePanel = styled.div`
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-xs);
 `;
 
 const DashboardWorkspace = ({
